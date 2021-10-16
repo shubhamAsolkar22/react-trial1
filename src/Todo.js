@@ -5,7 +5,7 @@ export default function Todo({ todo, toggleTodo }) {
         toggleTodo(todo.id);
     }
     function getTask() {
-        if (todo.striked)
+        if (todo.completed)
             return <strike>{todo.task}</strike>
         else return todo.task
     }

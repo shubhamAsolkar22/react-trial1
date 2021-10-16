@@ -36,20 +36,21 @@ function App() {
     const newTodos = [...todos]
     const todo = newTodos.find(todo => todo.id === id)
     todo.completed = !todo.completed
+    // todo.striked = !todo.striked
     setTodos(newTodos)
   }
-  function handleStrikeOutTodo() {
-    const newTodos = [...todos]
-    newTodos.filter(todo => todo.completed).forEach(todo => todo.striked = true);
-    setTodos(newTodos)
-  }
+  // function handleStrikeOutTodo() {
+  //   const newTodos = [...todos]
+  //   newTodos.filter(todo => todo.completed).forEach(todo => todo.striked = true);
+  //   setTodos(newTodos)
+  // }
   
   return (
     <>
       <TodoList todos={todos} toggleTodo={toggleTodo}  />
       <input ref={todoNameRef} type="text" />
       <button onClick={handleAddTodo}>add item</button>
-      <button onClick={handleStrikeOutTodo}>strike out completed todo</button>
+      {/* <button onClick={handleStrikeOutTodo}>strike out completed todo</button> */}
       <div>{todos.filter(e => e.completed == false).length} left</div>
     </>
   );
