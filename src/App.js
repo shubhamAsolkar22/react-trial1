@@ -3,12 +3,14 @@ import logo from './logo.svg';
 import './App.css';
 import TodoList from './TodoList';
 import * as uuid from "uuid";
+import Quote from './Quote';
 
 const LOCAL_STORAGE_KEY = 'christ'
 
 function App() {
   /* default state is empty array */
   const [todos, setTodos] = useState([{ id: uuid.v4(), task: 'learn reactjs', completed: false }, { id: uuid.v4(), task: 'learn investing', completed: false }]);
+  const [quote,setQuote] = useState({text: 'dummy quote'});
 
   const todoNameRef = useRef();
   useEffect(() => {
@@ -44,9 +46,28 @@ function App() {
   //   newTodos.filter(todo => todo.completed).forEach(todo => todo.striked = true);
   //   setTodos(newTodos)
   // }
-  
+  useEffect(() => {
+    fetch("https://quotes.rest/qod?language=en")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          console.log(result.contents.quotes.quote);
+          const newQuote = {};
+          newQuote.text = result.contents.quotes[0].quote;
+          setQuote(newQuote);
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          
+        }
+      )
+  }, [])
+
   return (
     <>
+      <Quote quote={quote} />
       <TodoList todos={todos} toggleTodo={toggleTodo}  />
       <input ref={todoNameRef} type="text" />
       <button onClick={handleAddTodo}>add item</button>
